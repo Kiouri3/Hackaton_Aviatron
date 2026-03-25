@@ -523,21 +523,21 @@ class ValveScadaApp:
         c.create_text(info_x, info_y0 + info_gap * 0, text=f"Задание: {status['target_position']:.1f} %", anchor="w", fill="#7fe3ff", font=("Consolas", 12, "bold"))
         c.create_text(info_x, info_y0 + info_gap * 1, text=f"Факт: {status['actual_position']:.1f} %", anchor="w", fill="#7fe3ff", font=("Consolas", 12, "bold"))
         c.create_text(info_x, info_y0 + info_gap * 2, text=f"Датчик: {status['measured_position']:.1f} %", anchor="w", fill="#7fe3ff", font=("Consolas", 12, "bold"))
-        c.create_text(info_x, info_y0 + info_gap * 3, text=f"Δ факт/датчик: {status['sensor_delta']:.2f} %", anchor="w", fill="#ffd166", font=("Consolas", 12, "bold"))
+        c.create_text(info_x, info_y0 + info_gap * 3, text=f"Дельта факт/датчик: {status['sensor_delta']:.2f} %", anchor="w", fill="#ffd166", font=("Consolas", 12, "bold"))
         c.create_text(info_x, info_y0 + info_gap * 4, text=f"Температура: {status['temperature']:.2f} °C", anchor="w", fill="#ff9f1c", font=("Consolas", 12, "bold"))
         c.create_text(info_x, info_y0 + info_gap * 5, text=f"Среда: {status['ambient_temp']:.1f} °C", anchor="w", fill="#ffd6a5", font=("Consolas", 12, "bold"))
 
         box_y = height - 55
-        self._draw_status_box(c, 80, box_y, 170, 36, "STATE", status["state"], state_color)
-        self._draw_status_box(c, 270, box_y, 170, 36, "MODE", status["mode"], "#6c757d" if mode == "normal" else alarm_color)
-        self._draw_status_box(c, 460, box_y, 170, 36, "MOVE", "YES" if is_moving else "NO", moving_color if is_moving else "#495057")
-        self._draw_status_box(c, 650, box_y, 240, 36, "ALARM", status["last_alarm"] if status["last_alarm"] else "none", alarm_color if status["last_alarm"] else "#495057")
+        self._draw_status_box(c, 80, box_y, 225, 36, "Состояние", status["state"], state_color)
+        self._draw_status_box(c, 320, box_y, 225, 36, "Режим", status["mode"], "#6c757d" if mode == "normal" else alarm_color)
+        self._draw_status_box(c, 560, box_y, 225, 36, "Движение", "В работе" if is_moving else "В простое", moving_color if is_moving else "#495057")
+        self._draw_status_box(c, 810, box_y, 300, 36, "Внимание", status["last_alarm"] if status["last_alarm"] else "Без проишествий", alarm_color if status["last_alarm"] else "#495057")
 
     def _draw_status_box(self, c: tk.Canvas, x: int, y: int, w: int, h: int, title: str, value: str, fill: str) -> None:
         c.create_rectangle(x, y, x + w, y + h, fill="#1f242a", outline="#6c757d")
         c.create_text(x + 8, y + h // 2, text=title, anchor="w", fill="#adb5bd", font=("Segoe UI", 9, "bold"))
-        c.create_rectangle(x + 70, y + 4, x + w - 4, y + h - 4, fill=fill, outline="")
-        c.create_text(x + 78, y + h // 2, text=value, anchor="w", fill="#11161b", font=("Segoe UI", 9, "bold"))
+        c.create_rectangle(x + 85, y + 4, x + w - 15, y + h - 4, fill=fill, outline="")
+        c.create_text(x + 98, y + h // 2, text=value, anchor="w", fill="#11161b", font=("Segoe UI", 9, "bold"))
 
     def _update_plots(self) -> None:
         p_trace = list(self.valve.position_trace)
